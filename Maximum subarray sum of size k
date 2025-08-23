@@ -1,1 +1,37 @@
+GFG link -- https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1
 
+class Solution {
+  public:
+    int maxSubarraySum(vector<int>& arr, int k) {
+        // code here
+        int i=0,j=0,temp_sum=0;
+        
+        //not initializing size = (j-i)+1 as every time the size needs to be updated
+        // but if we initialise here it remains fixed
+        
+        //if the array has all negative numbers, hence INT_MIN
+        int sum = INT_MIN;  
+        //INT_MIN → the minimum value that an int can store.
+        
+        while ( j < arr.size()) //to run for entire array
+        {
+            temp_sum += arr[j]; //calculating sum
+            
+            if ( (j-i)+1 < k )  // if window size not reached
+              j++;
+              
+            else if ((j-i)+1 == k) //if window size reached
+            {
+                if (temp_sum > sum)
+                  sum = temp_sum;    // taking higher sum of the windows
+                  
+                temp_sum -= arr[i];  //moving window ahead by subtracting arr[i] value
+                i++;                 // and increasing i and j counter
+                j++;
+            }
+        }
+        
+        return sum;
+   }
+
+};
