@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int reverse(int x) {
+        long long rev=0;
+
+    //Why we used long long rev
+    //While reversing, the number may overflow 32-bit int range (-2,147,483,648 to 
+    //2,147,483,647).
+    //Ex: input x = 1534236469 → reversed number = 9646324351, which is too large for int
+    //and initializing to 0 as if not initialized in c++ it creates a problem(garbage value)
+        int num=x;
+    
+        while(num!=0)
+        {
+            int rem = num % 10;
+            rev = rev * 10 + rem; ;
+            num = num / 10;
+        }
+        if(rev < INT_MIN || rev > INT_MAX) //to prevent underflow condition
+          return 0;
+
+     return (int)rev;
+     //int → 32 bits (4 bytes) → range ≈ −2.1e9 to 2.1e9
+     //long long → 64 bits (8 bytes) → range ≈ −9e18 to 9e18
+     //So long long can store much bigger numbers than int.
+     //and ques says --Assume the environment does not allow you to 
+     //store 64-bit integers (signed or unsigned)
+    }
+};
