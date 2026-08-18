@@ -1,0 +1,28 @@
+## fixed sixe SLIDING WINDOW 1-- https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1
+FIRST REACH THE REQD WINDOW SIZE AND MAINTAIN IT----
+
+# TC = O(n)   // because j goes from 0 - n-1 that is n iterations
+# SC = O(1)   // because we're only storing variables like i,j,sum,maxsum,size
+
+class Solution:
+    def maxSubarraySum(self, arr, k):
+        # code here 
+        size=len(arr)
+        i,j,summ=0,0,0
+        maxsum=float('-inf')
+        
+        while j < size:
+            summ+=arr[j]
+            
+            if (j-i)+1 < k:
+                j+=1
+                
+            else:                              ### REMEMBER TO USE ELSE HERE AND NOT IF BECAUSE IF WILL TAKE THE VALUE OF j THAT PREVIOUS IF CHANGES  ## I MADE ERROR HERE
+                maxsum=max(maxsum,summ)
+                summ-=arr[i]
+                i+=1
+                j+=1
+                
+        return maxsum
+                
+                
