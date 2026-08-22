@@ -1,3 +1,22 @@
+# PYTHON SOLUTION
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        # BRUTE FORCE -- O(n^2) and SC = O(1) 
+        '''n=len(nums)
+        for i in range(n):
+            for j in range(i+1,n):
+                if nums[i]+nums[j]==target:
+                    return [i,j]'''
+        # TC = O(N) and SC = O(N)
+        # Remember to store value->index , so that index can retrieved in O(1)
+        dictt={}
+        for elem in range(len(nums)):
+            val=target-nums[elem]
+            if val not in dictt:
+                dictt[nums[elem]]=elem
+            else:
+                return [elem,dictt[val]]
+# C++ SOLUTION
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
