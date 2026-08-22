@@ -1,0 +1,19 @@
+# BUY AND SELL STOCK --- https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+#OPTIMAL-- Keeps remembering:--“Minimum before today is already known.”-- ## O(N) = TC
+# brute was O(N^2) was giving TLE
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        profit,maxprofit=0,0
+        buy=float('inf')
+
+        for elem in prices:
+            if buy > elem:
+                buy=elem
+
+            else:
+                profit=elem-buy
+                maxprofit=max(maxprofit,profit)
+        
+        return maxprofit
+        
