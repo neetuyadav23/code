@@ -1,0 +1,32 @@
+# CONTAINS DUPLICATE -- https://leetcode.com/problems/contains-duplicate/description/
+# O(N)--- TC
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        #BRUTE---O(N^2)
+        '''s_set=set(nums)
+        for elem in s_set:
+            if nums.count(elem) >= 2:
+                return True
+        return False'''
+
+        #optimization METHOD 1 -- O(N)
+        '''seen = set()
+        for elem in nums:
+            if elem in seen:
+                return True
+            seen.add(elem)
+        return False'''
+
+        # optimization METHOD 2--O(N) TC & SC----
+        # opti1 works we'red oing more work here by counting all elements
+        dictt={}
+        for elem in nums:
+            if elem in dictt:
+                return True
+            else:
+                dictt[elem]=1
+
+        return False
+
+        
+        
