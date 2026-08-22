@@ -1,0 +1,57 @@
+# VALID ANAGRAM ( An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.) 
+# O(N + M) = O(N) -- TC
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        # BRUTE
+        # Tc = O(n + m + k) = O(n + m)= O(N) where O(n)= size of s
+        # O(m) is size of t and O(k) is time taken to check dictt_s == dictt_t
+        # where k < = min(n,m)
+        # SC = O(n + m) because we have to create 2 dictionaries
+        '''if len(s) != len(t):
+            return False
+        dictt_s={}
+        dictt_t={}
+        for elem in s:
+            if elem not in dictt_s:
+                dictt_s[elem]=1
+            else:
+                dictt_s[elem]+=1
+
+        for elm in t:
+            if elm not in dictt_t:
+                dictt_t[elm]=1
+            else:
+                dictt_t[elm]+=1
+
+        return dictt_s == dictt_t'''
+
+        # OPTIMIZATION
+        # Tc = O(n + m) or O(N) since anagrams must have equal length
+        # SC = O(k)
+        # WE are just optimizing space here by using only 1 hashmap
+        if len(s) != len(t):
+            return False
+
+        dictt={}
+
+        for elem in s:
+            if elem not in dictt:
+                dictt[elem]=1
+            else:
+                dictt[elem]+=1
+        
+        for val in t:
+            if val not in dictt:
+                return False
+            else:
+                dictt[val]-=1
+
+                if dictt[val] < 0:
+                    return False
+
+        return True
+
+        # very simple application using counter
+        # TC = O(n + m) and SC= O(k) 
+        #return Counter(s) == Counter(t)
