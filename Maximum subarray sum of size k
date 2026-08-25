@@ -1,4 +1,33 @@
 GFG link -- https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1
+# Time Complexity: O(n) and Space Complexity = O(1)
+
+PYTHON CODE--
+class Solution:
+    def maxSubarraySum(self, arr, k):
+        
+        i,j=0,0
+        summ=0 # this needs to be 0 because we're doing -- summ+=arr[j]
+        maxsum=float('-inf')
+
+        
+        while j<len(arr):
+            summ+=arr[j]
+            size=(j-i)+1
+            
+            if size < k:
+                j+=1
+                
+            if size == k:
+                maxsum=max(maxsum,summ)
+                summ-=arr[i]
+                i+=1
+                j+=1
+                
+        return maxsum
+        
+        
+        
+# C++ SOLUTION --       
 
 class Solution {
   public:
