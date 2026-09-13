@@ -1,38 +1,54 @@
 # Count Occurences of Anagrams(SLIDING WINDOW) -- https://www.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1
-# BRUTE APPROACH 1 -- find all combinations of word pat-- make a list of them -- iterate in that list and check if each anagram is present in txt or not --- 
+# BRUTE APPROACH 1 -- find all permutations of word pat-- make a list of them -- iterate in that list and check if each anagram is present in txt or not --- 
 #  -- but this has a problem what if there are multiple occurences of one anagram , but our code will count all as 1 - that its present in txt--- this can be useful when we want to find distinct occurences
 
-# BRUTE APPROACH 2 -- find all combinations of word pat and make a list of it, then iterate a window of len(pat) in txt and when any window in txt matches the list anagrams do count++
+# BRUTE APPROACH 2 -- find all permutations of word pat and make a list of it, then iterate a window of len(pat) in txt and when any window in txt matches the list anagrams do count++
 
-# OPTIMAL APPROACH -- 
-
-
-
-
-
-
+from itertools import permutations
 class Solution:
     def search(self,pat, txt):
+        
+        # TIME COMPLEXITY = O(n × m! × m)
+        # SPACE COMPLEXITY = O(m! × m) -- m! elements with size of each element= m
+        anagrams=[]
+        length=len(pat)
         i,j,cnt=0,0,0
-        size=len(pat)
         char=""
         
-        sorted_pat="".join(sorted(pat))
-
+        # if pat has 'm' characters then there are m! permutations.
+        for p in permutations(pat):
+            anagrams.append("".join(p))
+            
+        # j moves from 0 to n-1, so the loop runs O(n) times.
         while j < len(txt):
             char+=txt[j]
-            wsize=(j=i)+1
+            # O(n × m) because strings are immutable and hence strings are copied
+            #size=(j-i)+1
             
-            if wsize < size:
+            #if size < length:
+            if len(char) < length:
                 j+=1
                 
             else:
-                sorted_char="".join(sorted(char))
-                if sorted_pat == sorted_char:
+            # anagrams is a list.
+            # Python may have to check every element of the list.There are up to m! elements.
+            # And comparing strings of length m can cost O(m).
+            
+            #So this can cost: O(m! × m) per window.
+            # And you have roughly n windows. Therefore: O(n × m! × m)
+                if char in anagrams:
                     cnt+=1
-        
+                i+=1
+                j+=1
+                char=char[1:]
+                # While loop = O(n × m)because strings are immutable and hence strings are copied
+
+                
+        return cnt
+
+
 	    '''
-        # BRUTE APPROACH
+# BRUTE APPROACH 3
 		# TIME COMPLEXITY = O(m log m + n × k log k) == O(n × k log k) IF m = len(pat)
 		# SPACE COMPLEXITY = char → O(k) AND sorted list → O(k)
 		# THEREFORE, SPACE COMPLEXITY = o(k)
