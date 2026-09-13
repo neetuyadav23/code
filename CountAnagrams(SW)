@@ -1,0 +1,120 @@
+# Count Occurences of Anagrams(SLIDING WINDOW) -- https://www.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1
+# BRUTE APPROACH 1 -- find all combinations of word pat-- make a list of them -- iterate in that list and check if each anagram is present in txt or not --- 
+#  -- but this has a problem what if there are multiple occurences of one anagram , but our code will count all as 1 - that its present in txt--- this can be useful when we want to find distinct occurences
+
+# BRUTE APPROACH 2 -- find all combinations of word pat and make a list of it, then iterate a window of len(pat) in txt and when any window in txt matches the list anagrams do count++
+
+# OPTIMAL APPROACH -- 
+
+
+
+
+
+
+class Solution:
+    def search(self,pat, txt):
+        i,j,cnt=0,0,0
+        size=len(pat)
+        char=""
+        
+        sorted_pat="".join(sorted(pat))
+
+        while j < len(txt):
+            char+=txt[j]
+            wsize=(j=i)+1
+            
+            if wsize < size:
+                j+=1
+                
+            else:
+                sorted_char="".join(sorted(char))
+                if sorted_pat == sorted_char:
+                    cnt+=1
+        
+	    '''
+        # BRUTE APPROACH
+		# TIME COMPLEXITY = O(m log m + n × k log k) == O(n × k log k) IF m = len(pat)
+		# SPACE COMPLEXITY = char → O(k) AND sorted list → O(k)
+		# THEREFORE, SPACE COMPLEXITY = o(k)
+
+		s_pat=sorted(pat) # sorted take O(m log m)
+		sort_pat="".join(s_pat) # takes O(m)
+		k=len(pat)
+
+		# so till here TC = O(m log m) -- bigger one takes over
+
+		i,j=0,0
+		char=""
+		cnt=0
+
+		while j < len(txt):
+		    # let len(txt)= n so this loop runs O(n)
+
+		    char+=txt[j] # this line has hidden cost because strings are immutable
+		    # this can take O(k) but as sorting complexity is greater it dominates
+		    # so--  k log k > k
+		    size=(j-i)+1
+
+		    if size < k:
+		        j+=1
+
+		    if size == k:
+		        # Now char will have legth k
+		        sort_txt="".join(sorted(char))
+
+		        # so this takes O(k log k) + o(k)[to join]= O(k log k)
+		        # now this (k log k) is for one window, so for total windows
+
+		        # total windows = j-1+1= O(n)
+
+		        # Therefore, total here = O(n × k log k)
+		        if sort_txt == sort_pat:
+		            cnt+=1
+
+		        char=char[1:] # costs O(k)
+		        # for n windows total costs= O(nk)
+		        i+=1
+		        j+=1
+		return cnt
+		# so TOTAL TIME COMPLEXITY = O(m log m + n × k log k)
+		# BUT WE WRITE -- TC = O(n × k log k) because thats the dominant term
+
+		# NOW THIS IS CAUSING #TLE# so look for optimization which could be 
+		# reducing this time m log m or k log k = basically think to remove the 
+		# sorting part they are costing us
+		'''
+		# OPTIMAL APPROACH - 1
+        # TC = O(n x k)
+        # SC = o(k) which could be O(26)=O(1) since only 26 english letters
+
+        '''dictt={}
+        # below part will go till O(k)
+	    for char in pat:
+	        if char not in dictt:
+	            dictt[char]=1
+	        else:
+	            dictt[char]+=1
+
+	    i,j=0,0
+	    cnt=0
+	    k=len(pat)
+
+	    while j < len(txt):  # this will go n times--O(n)
+	        if txt[j] in dictt:
+	            dictt[txt[j]]-=1
+
+	        size=(j-i)+1
+
+	        if size < k:
+	            j+=1
+	        else:
+	            # if k = len(pat) then the below line takes O(k) for every lookup
+	            # and not O(1) so total = O(n x m)
+	            if all(value == 0 for value in dictt.values()):
+	                cnt+=1
+	            if txt[i] in dictt:
+	                dictt[txt[i]]+=1
+	            i+=1
+	            j+=1
+
+	    return cnt''' 
